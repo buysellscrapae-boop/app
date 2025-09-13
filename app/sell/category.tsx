@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Colors } from '@/constants/Colors';
-import { Car, Briefcase, Home, Building, Package, ChevronRight } from 'lucide-react-native';
+import { Car, Briefcase, Chrome as Home, Building, Package, ChevronRight } from 'lucide-react-native';
 
 const CATEGORIES = [
   {
