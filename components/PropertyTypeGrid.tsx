@@ -3,16 +3,14 @@ import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native
 import { Colors } from '@/constants/Colors';
 
 const PROPERTY_TYPES = [
-  { id: 'houses', name: 'Houses', icon: '🏠' },
+  { id: 'houses', name: 'Villa', icon: '🏠' },
   { id: 'apartments', name: 'Apartments\n& Flats', icon: '🏢' },
-  { id: 'residential', name: 'Residential\nPlots', icon: '🏞️' },
-  { id: 'portions', name: 'Portions\n& Floors', icon: '🏘️' },
+  { id: 'residential', name: 'Off\nPlan', icon: '🏞️' },
+  { id: 'portions', name: 'Secondary', icon: '🏘️' },
   { id: 'shops', name: 'Shops', icon: '🏪' },
   { id: 'warehouse', name: 'Warehouse', icon: '🏭' },
   { id: 'offices', name: 'Offices', icon: '🏢' },
-  { id: 'agricultural', name: 'Agricultural\nLand', icon: '🌾' },
-  { id: 'industrial', name: 'Industrial\nLand', icon: '🏭' },
-  { id: 'commercial', name: 'Commercial\nPlots', icon: '🏬' },
+  { id: 'agricultural', name: 'Land', icon: '🌾' },
 ];
 
 export default function PropertyTypeGrid() {
