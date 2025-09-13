@@ -105,6 +105,7 @@ export default function HomeScreen() {
               />
             )}
             keyExtractor={(item) => item.name}
+            key={activeTab}
             numColumns={activeTab === 'all' ? 4 : 3}
             scrollEnabled={false}
             columnWrapperStyle={styles.categoryRow}
