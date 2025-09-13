@@ -2,121 +2,88 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/Colors';
+import { RESIDENTIAL_PROPERTIES, COMMERCIAL_PROPERTIES } from '@/constants/dummyData';
 import PropertyTypeGrid from '@/components/PropertyTypeGrid';
 import PropertySection from '@/components/PropertySection';
 import SearchBar from '@/components/SearchBar';
+import TabNavigation from '@/components/TabNavigation';
 
 type PropertyType = 'buy' | 'rent';
-
-const POPULAR_RENT_PROPERTIES = [
-  {
-    id: '1',
-    price: 'AED 36,999',
-    title: '2 Beds • 2 Baths',
-    location: 'Bu Daniq',
-    image: 'https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=400',
-  },
-  {
-    id: '2',
-    price: 'AED 39,999',
-    title: '1 Bed • 2 Baths',
-    location: 'Al Majaz 1, Al Majaz',
-    image: 'https://images.pexels.com/photos/271618/pexels-photo-271618.jpeg?auto=compress&cs=tinysrgb&w=400',
-  },
-  {
-    id: '3',
-    price: 'AED 18,999',
-    title: 'Studio • 1 Bath',
-    location: 'Muwaileh',
-    image: 'https://images.pexels.com/photos/271743/pexels-photo-271743.jpeg?auto=compress&cs=tinysrgb&w=400',
-  }
-];
-
-const POPULAR_SALE_PROPERTIES = [
-  {
-    id: '1',
-    price: 'AED 3,500,000',
-    title: '4 Beds • 5 Baths',
-    location: 'Shoumous Residence...',
-    image: 'https://images.pexels.com/photos/164005/pexels-photo-164005.jpeg?auto=compress&cs=tinysrgb&w=400',
-  },
-  {
-    id: '2',
-    price: 'AED 9,501,000',
-    title: '2 Beds • 3 Baths',
-    location: 'DAMAC Bay Tower...',
-    image: 'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=400',
-  },
-  {
-    id: '3',
-    price: 'AED 4,800,000',
-    title: '5 Beds • 6 Baths',
-    location: 'Shoumous...',
-    image: 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=400',
-  }
-];
 
 export default function PropertyScreen() {
   const [activePropertyType, setActivePropertyType] = useState<PropertyType>('buy');
   const [searchText, setSearchText] = useState('');
 
   const getPlaceholderText = () => {
-    return activePropertyType === 'buy' ? 'Find your dream home' : 'Find your dream flat';
+    return activePropertyType === 'buy' ? 'Find your dream home' : 'Find your perfect rental';
   };
+
+  const renderPropertyToggle = () => (
+    <View style={styles.toggleContainer}>
+      <TouchableOpacity
+        style={[styles.toggleButton, activePropertyType === 'buy' && styles.activeToggleButton]}
+        onPress={() => setActivePropertyType('buy')}
+        activeOpacity={0.8}
+      >
+        <Text style={[styles.toggleButtonText, activePropertyType === 'buy' && styles.activeToggleButtonText]}>
+          Buy
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.toggleButton, activePropertyType === 'rent' && styles.activeToggleButton]}
+        onPress={() => setActivePropertyType('rent')}
+        activeOpacity={0.8}
+      >
+        <Text style={[styles.toggleButtonText, activePropertyType === 'rent' && styles.activeToggleButtonText]}>
+          Rent
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* Top Navigation Tabs */}
-        <View style={styles.topNavigation}>
-          <TouchableOpacity style={styles.navTab}>
-            <Text style={styles.navTabText}>All</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.navTab}>
-            <Text style={styles.navTabText}>Furniture</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.navTab, styles.activeNavTab]}>
-            <Text style={[styles.navTabText, styles.activeNavTabText]}>Property</Text>
-          </TouchableOpacity>
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Properties</Text>
+          <Text style={styles.headerSubtitle}>Find your perfect space</Text>
         </View>
+
+        {/* Tab Navigation - showing only Property as active */}
+        <TabNavigation activeTab="property" onTabChange={() => {}} />
 
         {/* Buy/Rent Toggle */}
-        <View style={styles.toggleContainer}>
-          <TouchableOpacity
-            style={[styles.toggleButton, activePropertyType === 'buy' && styles.activeToggleButton]}
-            onPress={() => setActivePropertyType('buy')}
-          >
-            <Text style={[styles.toggleButtonText, activePropertyType === 'buy' && styles.activeToggleButtonText]}>
-              Buy
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.toggleButton, activePropertyType === 'rent' && styles.activeToggleButton]}
-            onPress={() => setActivePropertyType('rent')}
-          >
-            <Text style={[styles.toggleButtonText, activePropertyType === 'rent' && styles.activeToggleButtonText]}>
-              Rent
-            </Text>
-          </TouchableOpacity>
-        </View>
+        {renderPropertyToggle()}
 
         {/* Search Bar */}
-        <SearchBar
-          placeholder={getPlaceholderText()}
-          value={searchText}
-          onChangeText={setSearchText}
-          style={styles.searchContainer}
-        />
+        <View style={styles.searchSection}>
+          <SearchBar
+            placeholder={getPlaceholderText()}
+            value={searchText}
+            onChangeText={setSearchText}
+            showFilter={true}
+            onFilterPress={() => {}}
+          />
+        </View>
 
-        {/* Search By Property Type */}
+        {/* Property Type Grid */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Search By Property Type</Text>
           <PropertyTypeGrid />
         </View>
 
         {/* Property Sections */}
-        <PropertySection title="Popular in Residential" properties={POPULAR_RENT_PROPERTIES} />
-        <PropertySection title="Popular in Commercial" properties={POPULAR_SALE_PROPERTIES} />
+        <PropertySection 
+          title="Popular in Residential" 
+          properties={RESIDENTIAL_PROPERTIES}
+          onSeeAll={() => {}}
+        />
+        <PropertySection 
+          title="Popular in Commercial" 
+          properties={COMMERCIAL_PROPERTIES}
+          onSeeAll={() => {}}
+        />
       </ScrollView>
     </SafeAreaView>
   );
@@ -125,77 +92,66 @@ export default function PropertyScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F0F2F5',
+    backgroundColor: Colors.surface,
   },
-  topNavigation: {
-    flexDirection: 'row',
+  header: {
     paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingTop: 8,
     paddingBottom: 8,
-    gap: 8,
   },
-  navTab: {
-    flex: 1,
-    backgroundColor: Colors.white,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 12,
-    alignItems: 'center',
+  headerTitle: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: Colors.textPrimary,
+    marginBottom: 4,
   },
-  activeNavTab: {
-    backgroundColor: '#1B4D3E',
-  },
-  navTabText: {
+  headerSubtitle: {
     fontSize: 16,
-    fontWeight: '600',
-    color: Colors.dark,
-  },
-  activeNavTabText: {
-    color: Colors.white,
+    color: Colors.textSecondary,
+    fontWeight: '400',
   },
   toggleContainer: {
     flexDirection: 'row',
     marginHorizontal: 16,
-    marginTop: 16,
-    backgroundColor: '#E8F0FE',
-    borderRadius: 12,
+    marginBottom: 24,
+    backgroundColor: Colors.gray100,
+    borderRadius: 16,
     padding: 4,
   },
   toggleButton: {
     flex: 1,
     paddingVertical: 12,
     alignItems: 'center',
-    borderRadius: 8,
+    borderRadius: 12,
   },
   activeToggleButton: {
     backgroundColor: Colors.white,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
+    shadowColor: Colors.black,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 3,
   },
   toggleButtonText: {
     fontSize: 16,
     fontWeight: '600',
-    color: Colors.gray,
+    color: Colors.textSecondary,
   },
   activeToggleButtonText: {
     color: Colors.primary,
   },
-  searchContainer: {
-    marginHorizontal: 16,
-    marginTop: 16,
+  searchSection: {
+    paddingHorizontal: 16,
+    marginBottom: 32,
   },
   section: {
-    marginTop: 24,
-    paddingHorizontal: 16,
-    marginBottom: 24,
+    marginBottom: 32,
   },
   sectionTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: Colors.dark,
+    fontSize: 20,
+    fontWeight: '700',
+    color: Colors.textPrimary,
     marginBottom: 16,
+    paddingHorizontal: 16,
   },
 });
