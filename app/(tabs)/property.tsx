@@ -115,8 +115,8 @@ export default function PropertyScreen() {
         </View>
 
         {/* Property Sections */}
-        <PropertySection title="Popular in Residential for Rent" properties={POPULAR_RENT_PROPERTIES} />
-        <PropertySection title="Popular in Residential for Sale" properties={POPULAR_SALE_PROPERTIES} />
+        <PropertySection title="Popular in Residential" properties={POPULAR_RENT_PROPERTIES} />
+        <PropertySection title="Popular in Commercial" properties={POPULAR_SALE_PROPERTIES} />
       </ScrollView>
     </SafeAreaView>
   );
