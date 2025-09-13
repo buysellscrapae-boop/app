@@ -70,10 +70,10 @@ export default function PropertyScreen() {
         {/* Top Navigation Tabs */}
         <View style={styles.topNavigation}>
           <TouchableOpacity style={styles.navTab}>
-            <Text style={styles.navTabText}>OLX</Text>
+            <Text style={styles.navTabText}>All</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.navTab}>
-            <Text style={styles.navTabText}>Motors</Text>
+            <Text style={styles.navTabText}>Furniture</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.navTab, styles.activeNavTab]}>
             <Text style={[styles.navTabText, styles.activeNavTabText]}>Property</Text>
