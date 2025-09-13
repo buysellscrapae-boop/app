@@ -133,7 +133,7 @@ export default function HomeScreen() {
         </View>
 
         {/* Property Sub-options */}
-        /* {activeCategory === 'property' && renderPropertySubNav()} */
+         {activeCategory === 'property' && renderPropertySubNav()} 
 
         {/* Search and Location Row */}
         <View style={styles.searchAndLocationRow}>
