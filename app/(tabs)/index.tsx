@@ -162,8 +162,8 @@ export default function HomeScreen() {
               <Text style={styles.sectionTitle}>Search By Property Type</Text>
               <PropertyTypeGrid />
             </View>
-            <PropertySection title="Popular in Residential for Rent" properties={POPULAR_RENT_PROPERTIES} />
-            <PropertySection title="Popular in Residential for Sale" properties={POPULAR_SALE_PROPERTIES} />
+            <PropertySection title="Popular in Residential" properties={POPULAR_RENT_PROPERTIES} />
+            <PropertySection title="Popular in Commertial" properties={POPULAR_SALE_PROPERTIES} />
           </View>
         ) : (
           <View style={styles.content}>
