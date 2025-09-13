@@ -99,6 +99,14 @@ const styles = StyleSheet.create({
   listContainer: {
     paddingHorizontal: 0,
   },
+  locationCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 20,
+    paddingHorizontal: 24,
+    backgroundColor: Colors.white,
+  },
   locationItem: {
     flexDirection: 'row',
     alignItems: 'center',
