@@ -1,7 +1,10 @@
 import { Stack } from 'expo-router';
+import { useFrameworkReady } from '@/hooks/useFrameworkReady';
 import { LocationProvider } from '@/contexts/LocationContext'; // Import LocationProvider
 
 export default function RootLayout() {
+  useFrameworkReady();
+
   return (
     <LocationProvider>
       <Stack>
