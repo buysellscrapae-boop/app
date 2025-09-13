@@ -48,7 +48,7 @@ export default function TabLayout() {
         listeners={{
           tabPress: (e) => {
             e.preventDefault();
-            router.push('/location?from=sell');
+            router.push('/sell');
           },
         }}
       />
