@@ -1,25 +1,4 @@
-import { 
-  Home, 
-  Sofa, 
-  Tv, 
-  Lamp, 
-  Drill, 
-  Shirt, 
-  Building, 
-  Landmark, 
-  ClipboardList,
-  Bed,
-  ChefHat,
-  Lightbulb,
-  Wrench,
-  Archive,
-  Car,
-  Smartphone,
-  Watch,
-  Headphones,
-  Camera,
-  Gamepad2
-} from 'lucide-react-native';
+import { Chrome as Home, Sofa, Tv, Lamp, Drill, Shirt, Building, Landmark, ClipboardList, Bed, ChefHat, Lightbulb, Wrench, Archive, Car, Smartphone, Watch, Headphones, Camera, Gamepad2 } from 'lucide-react-native';
 
 // Enhanced categories with better iconography and organization
 export const CATEGORIES = [

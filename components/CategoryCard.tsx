@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { LucideProps } from 'lucide-react-native';
+import { TableProperties as LucideProps } from 'lucide-react-native';
 import { Colors } from '@/constants/Colors';
 
 interface CategoryCardProps {
