@@ -180,7 +180,7 @@ export default function HomeScreen() {
             style={[styles.primaryNavButton, activeCategory === 'furniture' && styles.activePrimaryNavButton]}
             onPress={() => setActiveCategory('furniture')}
           >
-            <Text style={[styles.primaryNavButtonText, activeCategory === 'furniture' && styles.activePrimaryNavButtonText]}>Motors</Text>
+            <Text style={[styles.primaryNavButtonText, activeCategory === 'furniture' && styles.activePrimaryNavButtonText]}>Furniture</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.primaryNavButton, activeCategory === 'property' && styles.activePrimaryNavButton]}
@@ -252,7 +252,7 @@ export default function HomeScreen() {
             {/* Popular in Residential for Rent */}
             <View style={styles.section}>
               <View style={styles.sectionHeader}>
-                <Text style={styles.sectionTitle}>Popular in Residential for Rent</Text>
+                <Text style={styles.sectionTitle}>Popular for Rent</Text>
                 <TouchableOpacity>
                   <ChevronRight size={20} color={Colors.dark} />
                 </TouchableOpacity>
@@ -270,7 +270,7 @@ export default function HomeScreen() {
             {/* Popular in Residential for Sale */}
             <View style={styles.section}>
               <View style={styles.sectionHeader}>
-                <Text style={styles.sectionTitle}>Popular in Residential for Sale</Text>
+                <Text style={styles.sectionTitle}>Popular for Sale</Text>
                 <TouchableOpacity>
                   <ChevronRight size={20} color={Colors.dark} />
                 </TouchableOpacity>
