@@ -1,15 +1,18 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Colors } from '@/constants/Colors';
-import { MapPin, ChevronRight } from 'lucide-react-native';
+import { X, Check } from 'lucide-react-native';
 import { EMIRATES } from '@/constants/dummyData';
+import { useState } from 'react';
 
 export default function SellLocationScreen() {
   const router = useRouter();
+  const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
 
   const handleLocationSelect = (location: string) => {
+    setSelectedLocation(location);
     router.push({
       pathname: '/sell/category',
       params: { location }
@@ -22,96 +25,96 @@ export default function SellLocationScreen() {
       onPress={() => handleLocationSelect(item)}
       activeOpacity={0.7}
     >
-      <View style={styles.locationContent}>
-        <View style={styles.locationIcon}>
-          <MapPin size={24} color={Colors.primary} strokeWidth={2} />
-        </View>
-        <Text style={styles.locationName}>{item}</Text>
-      </View>
-      <ChevronRight size={20} color={Colors.textSecondary} strokeWidth={2} />
+      <Text style={styles.locationName}>{item}</Text>
+      {selectedLocation === item && (
+        <Check size={20} color={Colors.danger} strokeWidth={2} />
+      )}
     </TouchableOpacity>
   );
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Where should we place your ad?</Text>
-        <Text style={styles.headerSubtitle}>Select your emirate to get started</Text>
-      </View>
+    <>
+      <StatusBar barStyle="dark-content" backgroundColor={Colors.white} />
+      <SafeAreaView style={styles.container} edges={['top']}>
+        <View style={styles.header}>
+          <TouchableOpacity 
+            style={styles.closeButton}
+            onPress={() => router.back()}
+            activeOpacity={0.7}
+          >
+            <X size={24} color={Colors.textPrimary} strokeWidth={2} />
+          </TouchableOpacity>
+        </View>
 
-      <FlatList
-        data={EMIRATES}
-        renderItem={renderLocationItem}
-        keyExtractor={(item) => item}
-        contentContainerStyle={styles.listContainer}
-        showsVerticalScrollIndicator={false}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
-      />
-    </SafeAreaView>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Select a City</Text>
+          <Text style={styles.subtitle}>Where should we place your ad?</Text>
+        </View>
+
+        <FlatList
+          data={EMIRATES}
+          renderItem={renderLocationItem}
+          keyExtractor={(item) => item}
+          contentContainerStyle={styles.listContainer}
+          showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+        />
+      </SafeAreaView>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.surface,
-  },
-  header: {
-    paddingHorizontal: 24,
-    paddingTop: 16,
-    paddingBottom: 32,
     backgroundColor: Colors.white,
   },
-  headerTitle: {
-    fontSize: 28,
+  header: {
+    paddingHorizontal: 16,
+    paddingTop: 8,
+    paddingBottom: 16,
+  },
+  closeButton: {
+    alignSelf: 'flex-start',
+    padding: 8,
+  },
+  titleContainer: {
+    alignItems: 'center',
+    paddingHorizontal: 24,
+    paddingBottom: 32,
+  },
+  title: {
+    fontSize: 24,
     fontWeight: '700',
     color: Colors.textPrimary,
-    marginBottom: 8,
-    lineHeight: 34,
+    marginBottom: 12,
+    textAlign: 'center',
   },
-  headerSubtitle: {
+  subtitle: {
     fontSize: 16,
     color: Colors.textSecondary,
     fontWeight: '400',
+    textAlign: 'center',
   },
   listContainer: {
-    paddingHorizontal: 24,
-    paddingTop: 16,
+    paddingHorizontal: 0,
   },
-  locationCard: {
+  locationItem: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: Colors.white,
     paddingVertical: 20,
-    paddingHorizontal: 20,
-    borderRadius: 16,
-    shadowColor: Colors.black,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 8,
-    elevation: 3,
-  },
-  locationContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1,
-  },
-  locationIcon: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: Colors.primaryLighter,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 16,
+    paddingHorizontal: 24,
+    backgroundColor: Colors.white,
   },
   locationName: {
-    fontSize: 18,
-    fontWeight: '600',
+    fontSize: 17,
+    fontWeight: '400',
     color: Colors.textPrimary,
+    flex: 1,
   },
   separator: {
     height: 12,
-  },
+    backgroundColor: Colors.gray200,
+    marginLeft: 24,
 });
