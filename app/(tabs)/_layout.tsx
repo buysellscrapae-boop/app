@@ -40,14 +40,6 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="property"
-        options={{
-          title: 'Property',
-          headerShown: false,
-          tabBarIcon: ({ color, size }) => <Building color={color} size={size} />,
-        }}
-      />
-      <Tabs.Screen
         name="sell"
         options={{
           title: 'Sell',
