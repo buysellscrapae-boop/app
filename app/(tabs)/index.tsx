@@ -127,7 +127,7 @@ export default function HomeScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Primary Navigation */}
         <View style={styles.primaryNavContainer}>
-          {renderNavButton('all', 'OLX')}
+          {renderNavButton('all', 'All')}
           {renderNavButton('furniture', 'Furniture')}
           {renderNavButton('property', 'Property')}
         </View>
