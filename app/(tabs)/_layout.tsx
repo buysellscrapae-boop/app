@@ -1,5 +1,5 @@
 import { Tabs, useRouter } from 'expo-router';
-import { Chrome as Home, Search, SquarePlus as PlusSquare, MessageCircle, User, Building } from 'lucide-react-native';
+import { Home, Search, PlusSquare, MessageCircle, User } from 'lucide-react-native';
 import { Colors } from '@/constants/Colors';
 
 export default function TabLayout() {
@@ -59,6 +59,12 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size }) => <MessageCircle color={color} size={size} />,
         }}
       />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Profile',
+          tabBarIcon: ({ color, size }) => <User color={color} size={size} />,
+        }}
       />
     </Tabs>
   );
