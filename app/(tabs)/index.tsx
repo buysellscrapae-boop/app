@@ -5,7 +5,7 @@ import { Colors } from '@/constants/Colors';
 import { CATEGORIES, LISTINGS } from '@/constants/dummyData';
 import CategoryCard from '@/components/CategoryCard';
 import ListingCard from '@/components/ListingCard';
-import { Search, MapPin, ChevronDown, Heart, Calendar, Image } from 'lucide-react-native';
+import { Search, MapPin, ChevronDown, Heart, Calendar, Image, ChevronRight } from 'lucide-react-native';
 import { useLocation } from '@/contexts/LocationContext';
 import { useRouter } from 'expo-router';
 
