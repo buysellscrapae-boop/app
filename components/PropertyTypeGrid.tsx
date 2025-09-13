@@ -29,7 +29,7 @@ export default function PropertyTypeGrid() {
       data={PROPERTY_TYPES}
       renderItem={renderPropertyType}
       keyExtractor={(item) => item.id}
-      numColumns={5}
+      numColumns={4}
       scrollEnabled={false}
       contentContainerStyle={styles.grid}
     />
