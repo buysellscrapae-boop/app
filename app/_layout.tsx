@@ -10,7 +10,6 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="location" options={{ presentation: 'modal', title: 'Select Location' }} />
-        <Stack.Screen name="sell" options={{ headerShown: false }} />
       </Stack>
     </LocationProvider>
   );
