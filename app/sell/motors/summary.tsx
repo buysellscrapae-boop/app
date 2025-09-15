@@ -73,6 +73,10 @@ export default function MotorsSummaryScreen() {
     setLoading(true);
     
     try {
+      if (!supabase) {
+        throw new Error('Supabase not configured. Please set up your environment variables.');
+      }
+
       if (!user) {
         throw new Error('User not authenticated');
       }

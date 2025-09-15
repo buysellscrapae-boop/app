@@ -25,6 +25,9 @@ export function useAuth() {
   }, []);
 
   const signInAnonymously = async () => {
+    if (!supabase) {
+      return { data: null, error: new Error('Supabase not configured. Please set up your environment variables.') };
+    }
     const { data, error } = await supabase.auth.signInAnonymously();
     return { data, error };
   };

@@ -69,6 +69,10 @@ export default function MotorsFormScreen() {
     setLoading(true);
     
     try {
+      if (!supabase) {
+        throw new Error('Supabase not configured. Please set up your environment variables.');
+      }
+
       // Ensure user is authenticated (sign in anonymously if needed)
       let currentUser = user;
       if (!currentUser) {
