@@ -15,12 +15,12 @@ export default function LocationModal() {
 
   const handleSelectLocation = (selectedLocation: string) => {
     setLocation(selectedLocation);
-    router.back();
     
     if (isSellFlow) {
-      setTimeout(() => {
-        router.push('/sell');
-      }, 50);
+      // Navigate directly to category selection for sell flow
+      router.replace('/sell/category');
+    } else {
+      router.back();
     }
   };
 
