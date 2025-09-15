@@ -5,6 +5,8 @@ import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Colors } from '@/constants/Colors';
 import { ArrowLeft, Camera, MapPin, ChevronDown, Check } from 'lucide-react-native';
 import { Picker } from '@react-native-picker/picker';
+import { supabase } from '@/lib/supabase';
+import { useAuth } from '@/hooks/useAuth';
 
 const FUEL_TYPES = ['Petrol', 'Diesel', 'Hybrid', 'Electric'];
 const WARRANTY_OPTIONS = ['Yes', 'No', 'Does Not Apply'];
@@ -36,6 +38,8 @@ interface SummaryData {
 export default function MotorsSummaryScreen() {
   const router = useRouter();
   const params = useLocalSearchParams();
+  const { user } = useAuth();
+  const [loading, setLoading] = useState(false);
   
   const [summaryData, setSummaryData] = useState<SummaryData>({
     postTitle: '',
@@ -62,16 +66,61 @@ export default function MotorsSummaryScreen() {
       return;
     }
     
-    Alert.alert(
-      'Success!',
-      'Your ad has been posted successfully.',
-      [
-        {
-          text: 'OK',
-          onPress: () => router.push('/(tabs)')
-        }
-      ]
-    );
+    publishListing();
+  };
+
+  const publishListing = async () => {
+    setLoading(true);
+    
+    try {
+      if (!user) {
+        throw new Error('User not authenticated');
+      }
+
+      const listingId = params.listingId as string;
+      if (!listingId) {
+        throw new Error('Listing ID not found');
+      }
+
+      // Update the listing with summary data and publish it
+      const { error } = await supabase
+        .from('motors_listings')
+        .update({
+          post_title: summaryData.postTitle,
+          description: summaryData.description,
+          fuel_type: summaryData.fuelType,
+          exterior_colour: summaryData.exteriorColour,
+          interior_colour: summaryData.interiorColour,
+          warranty: summaryData.warranty,
+          transmission_type: summaryData.transmissionType,
+          seating_capacity: summaryData.seatingCapacity,
+          horse_power: summaryData.horsePower,
+          steering_hand: summaryData.steeringHand,
+          technical_features: summaryData.technicalFeatures,
+          location: summaryData.location,
+          status: 'published'
+        })
+        .eq('id', listingId)
+        .eq('user_id', user.id);
+
+      if (error) throw error;
+
+      Alert.alert(
+        'Success!',
+        'Your ad has been posted successfully.',
+        [
+          {
+            text: 'OK',
+            onPress: () => router.push('/(tabs)')
+          }
+        ]
+      );
+    } catch (error) {
+      console.error('Error publishing listing:', error);
+      Alert.alert('Error', 'Failed to publish your listing. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const toggleTechnicalFeature = (feature: string) => {
@@ -346,11 +395,14 @@ export default function MotorsSummaryScreen() {
       {/* Post Ad Button */}
       <View style={styles.footer}>
         <TouchableOpacity 
-          style={styles.postButton} 
+          style={[styles.postButton, loading && styles.disabledButton]} 
           onPress={handlePostAd}
           activeOpacity={0.8}
+          disabled={loading}
         >
-          <Text style={styles.postButtonText}>Post Ad</Text>
+          <Text style={styles.postButtonText}>
+            {loading ? 'Publishing...' : 'Post Ad'}
+          </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -599,5 +651,8 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontSize: 18,
     fontWeight: '700',
+  },
+  disabledButton: {
+    opacity: 0.6,
   },
 });
