@@ -5,6 +5,12 @@ const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY!;
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
+// Temporary console logs to verify environment variables
+console.log('Supabase URL:', supabaseUrl);
+console.log('Supabase Anon Key:', supabaseAnonKey);
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
 // Types for our database
 export interface MotorsListing {
   id: string;
