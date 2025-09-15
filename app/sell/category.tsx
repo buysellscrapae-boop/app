@@ -15,14 +15,6 @@ const CATEGORIES = [
     gradient: ['#FEE2E2', '#FECACA'],
   },
   {
-    id: 'jobs',
-    title: 'Jobs',
-    subtitle: 'Find your next opportunity',
-    icon: Briefcase,
-    color: '#2563EB',
-    gradient: ['#DBEAFE', '#BFDBFE'],
-  },
-  {
     id: 'property-sale',
     title: 'Property for Sale',
     subtitle: 'Houses, apartments & land',
@@ -45,6 +37,14 @@ const CATEGORIES = [
     icon: Grid3X3,
     color: '#F59E0B',
     gradient: ['#FEF3C7', '#FDE68A'],
+  },
+  {
+    id: 'jobs',
+    title: 'Jobs',
+    subtitle: 'Find your next opportunity',
+    icon: Briefcase,
+    color: '#2563EB',
+    gradient: ['#DBEAFE', '#BFDBFE'],
   },
 ];
 
