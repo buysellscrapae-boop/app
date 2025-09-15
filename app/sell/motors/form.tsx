@@ -5,6 +5,8 @@ import { useRouter } from 'expo-router';
 import { Colors } from '@/constants/Colors';
 import { ArrowLeft, ChevronDown } from 'lucide-react-native';
 import { Picker } from '@react-native-picker/picker';
+import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/lib/supabase';
 
 const MOTOR_TYPES = ['Car', 'Motorcycle', 'Auto Accessories & Parts', 'Heavy Vehicles', 'Boats', 'Number Plates'];
 const EMIRATES = ['Dubai', 'Abu Dhabi', 'Ras Al Khaimah', 'Sharjah', 'Fujairah', 'Ajman', 'Umm Al Quwain', 'Al Ain'];
@@ -30,6 +32,7 @@ interface FormData {
 
 export default function MotorsFormScreen() {
   const router = useRouter();
+  const { user, signInAnonymously } = useAuth();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     motorType: '',
@@ -49,7 +52,7 @@ export default function MotorsFormScreen() {
     router.back();
   };
 
-  const handleContinue = () => {
+  const saveDraftAndContinue = async () => {
     // Validate required fields
     const requiredFields = ['motorType', 'emirate', 'makeModel', 'regionalSpecs', 'year', 'kilometres', 'bodyType', 'price', 'phoneNumber'];
     const missingFields = requiredFields.filter(field => !formData[field as keyof FormData]);
@@ -59,11 +62,58 @@ export default function MotorsFormScreen() {
       return;
     }
 
-    // Navigate to summary with form data
-    router.push({
-      pathname: '/sell/motors/summary',
-      params: { ...formData }
-    });
+    setLoading(true);
+
+    try {
+      // Ensure user is authenticated
+      let currentUser = user;
+      if (!currentUser) {
+        const { data, error } = await signInAnonymously();
+        if (error) throw error;
+        currentUser = data.user;
+      }
+
+      if (!currentUser) {
+        throw new Error('Authentication failed');
+      }
+
+      // Save draft to Supabase
+      const { data, error } = await supabase
+        .from('motors_listings')
+        .insert({
+          user_id: currentUser.id,
+          motor_type: formData.motorType,
+          emirate: formData.emirate,
+          make_model: formData.makeModel,
+          trim: formData.trim,
+          regional_specs: formData.regionalSpecs,
+          year: formData.year,
+          kilometres: formData.kilometres,
+          body_type: formData.bodyType,
+          is_insured: formData.isInsured,
+          price: formData.price,
+          phone_number: formData.phoneNumber,
+          status: 'draft'
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      // Navigate to summary with listing ID
+      router.push({
+        pathname: '/sell/motors/summary',
+        params: { 
+          listingId: data.id,
+          ...formData 
+        }
+      });
+    } catch (error) {
+      console.error('Error saving draft:', error);
+      Alert.alert('Error', 'Failed to save your listing. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const renderDropdown = (
@@ -250,7 +300,7 @@ export default function MotorsFormScreen() {
       <View style={styles.footer}>
         <TouchableOpacity 
           style={[styles.continueButton, loading && styles.disabledButton]} 
-          onPress={handleContinue}
+          onPress={saveDraftAndContinue}
           activeOpacity={0.8}
           disabled={loading}
         >
